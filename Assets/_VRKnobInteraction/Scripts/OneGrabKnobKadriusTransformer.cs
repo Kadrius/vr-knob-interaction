@@ -1,10 +1,11 @@
 using Oculus.Interaction;
+using TMPro;
 using UnityEngine;
 
 public class OneGrabKnobKadriusTransformer : MonoBehaviour, ITransformer
 {
-    [SerializeField]
-    protected Axis rotationAxisType = Axis.Up;
+    [SerializeField] protected Axis rotationAxisType = Axis.Up;
+    [SerializeField] TextMeshProUGUI debugText;
 
     protected IGrabbable _grabbable;
     protected Transform grabbableTransform;
@@ -55,6 +56,8 @@ public class OneGrabKnobKadriusTransformer : MonoBehaviour, ITransformer
         print($"yDeltaAngle: {yDeltaAngle}");
         print($"zDeltaAngle: {zDeltaAngle}");
 
+        DebugPrints(xDeltaAngle, yDeltaAngle, zDeltaAngle);
+
         //_grabbable.Transform.Rotate(rotationAxis, xDeltaAngle + zDeltaAngle + yDeltaAngle);
         Vector3 newRotation = _grabbable.Transform.rotation.eulerAngles;
         newRotation.z += xDeltaAngle + yDeltaAngle + zDeltaAngle;
@@ -93,9 +96,17 @@ public class OneGrabKnobKadriusTransformer : MonoBehaviour, ITransformer
         return rotationAxis;
     }
 
-    protected void DebugPrints()
+    protected void DebugPrints(float xDeltaAngle, float yDeltaAngle, float zDeltaAngle)
     {
-
+        if (debugText != null)
+        {
+            debugText.text = $"PrevHandForwardAngle: {prevHandForwardAngle}\n" +
+                             $"PrevHandRightAngle: {prevHandRightAngle}\n" +
+                             $"PrevHandUpAngle: {prevHandUpAngle}\n" +
+                             $"xDeltaAngle: {xDeltaAngle}\n" +
+                             $"yDeltaAngle: {yDeltaAngle}\n" +
+                             $"zDeltaAngle: {zDeltaAngle}\n";
+        }
     }
 
     #endregion
