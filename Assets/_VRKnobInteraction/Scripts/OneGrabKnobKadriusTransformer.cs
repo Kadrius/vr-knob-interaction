@@ -15,6 +15,12 @@ public class OneGrabKnobKadriusTransformer : MonoBehaviour, ITransformer
     protected float prevHandRightAngle;
     protected float prevHandUpAngle;
 
+    protected Vector3 prevHandForward;
+    protected Vector3 prevHandRight;
+    protected Vector3 prevHandUp;
+
+    protected float xFactor, yFactor, zFactor;
+
     public void Initialize(IGrabbable grabbable)
     {
         _grabbable = grabbable;
@@ -32,40 +38,34 @@ public class OneGrabKnobKadriusTransformer : MonoBehaviour, ITransformer
 
     public void UpdateTransform()
     {
-        Vector3 handForward = _grabbable.GrabPoints[0].forward;
-        Vector3 handRight = _grabbable.GrabPoints[0].right;
-        Vector3 handUp = _grabbable.GrabPoints[0].up;
+        Vector3 currentHandForward = _grabbable.GrabPoints[0].forward;
+        Vector3 currentHandRight = _grabbable.GrabPoints[0].right;
+        Vector3 currentHandUp = _grabbable.GrabPoints[0].up;
 
-        float currentHandForwardAngle = _grabbable.GrabPoints[0].rotation.eulerAngles.z;
-        float currentHandRightAngle = _grabbable.GrabPoints[0].rotation.eulerAngles.x;
-        float currentHandUpAngle = _grabbable.GrabPoints[0].rotation.eulerAngles.y;
+        xFactor = MathUtils.ColinearityFactor(rotationAxis, currentHandRight, true);
+        yFactor = MathUtils.ColinearityFactor(rotationAxis, currentHandUp, true);
+        zFactor = MathUtils.ColinearityFactor(rotationAxis, currentHandForward, true);
 
-        float xFactor = MathUtils.ColinearityFactor(rotationAxis, handRight, true);
-        float yFactor = MathUtils.ColinearityFactor(rotationAxis, handUp, true);
-        float zFactor = MathUtils.ColinearityFactor(rotationAxis, handForward, true);
-
-        float xDeltaAngle = currentHandRightAngle - prevHandRightAngle;
-        float yDeltaAngle = currentHandUpAngle - prevHandUpAngle;
-        float zDeltaAngle = currentHandForwardAngle - prevHandForwardAngle;
+        //Chose to use SignedAngle because it gives an absolute angle difference. Using eulerAngles difference can lead to issues when crossing 0/360 boundary.
+        //It isn't perfect because the axis of rotation is not always perfectly aligned, but the difference is minimal because the calculation is frame by frame
+        //and the factors help to minimize the error.
+        float xDeltaAngle = Vector3.SignedAngle(prevHandForward, currentHandForward, currentHandRight);
+        float yDeltaAngle = Vector3.SignedAngle(prevHandForward, currentHandForward, currentHandUp);
+        float zDeltaAngle = Vector3.SignedAngle(prevHandRight, currentHandRight, currentHandForward);
 
         xDeltaAngle *= xFactor;
         yDeltaAngle *= yFactor;
         zDeltaAngle *= zFactor;
 
-        print($"xDeltaAngle: {xDeltaAngle}");
-        print($"yDeltaAngle: {yDeltaAngle}");
-        print($"zDeltaAngle: {zDeltaAngle}");
-
         DebugPrints(xDeltaAngle, yDeltaAngle, zDeltaAngle);
 
-        //_grabbable.Transform.Rotate(rotationAxis, xDeltaAngle + zDeltaAngle + yDeltaAngle);
         Vector3 newRotation = _grabbable.Transform.rotation.eulerAngles;
         newRotation.z += xDeltaAngle + yDeltaAngle + zDeltaAngle;
         _grabbable.Transform.rotation = Quaternion.Euler(newRotation);
 
-        prevHandForwardAngle = currentHandForwardAngle;
-        prevHandRightAngle = currentHandRightAngle;
-        prevHandUpAngle = currentHandUpAngle;
+        prevHandForward = currentHandForward;
+        prevHandRight = currentHandRight;
+        prevHandUp = currentHandUp;
     }
 
     public void EndTransform()
@@ -103,9 +103,9 @@ public class OneGrabKnobKadriusTransformer : MonoBehaviour, ITransformer
             debugText.text = $"PrevHandForwardAngle: {prevHandForwardAngle}\n" +
                              $"PrevHandRightAngle: {prevHandRightAngle}\n" +
                              $"PrevHandUpAngle: {prevHandUpAngle}\n" +
-                             $"xDeltaAngle: {xDeltaAngle}\n" +
-                             $"yDeltaAngle: {yDeltaAngle}\n" +
-                             $"zDeltaAngle: {zDeltaAngle}\n";
+                             $"xDeltaAngle: {xDeltaAngle} - xFactor: {xFactor}\n" +
+                             $"yDeltaAngle: {yDeltaAngle} - yFactor: {yFactor}\n" +
+                             $"zDeltaAngle: {zDeltaAngle} - zFactor: {zFactor}\n";
         }
     }
 
