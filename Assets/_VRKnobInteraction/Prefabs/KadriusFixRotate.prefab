@@ -162,13 +162,14 @@ MonoBehaviour:
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 1
   _forwardElement: {fileID: 0}
-  _oneGrabTransformer: {fileID: 0}
+  _oneGrabTransformer: {fileID: 4704394124437076714}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
   _rigidbody: {fileID: 740481136894920689}
   _kinematicWhileSelected: 1
   _throwWhenUnselected: 1
+  _forceKinematicDisabled: 0
 --- !u!54 &740481136894920689
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -208,7 +209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f2ca10a3e422f3429eab88e6fd44d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationAxisType: 1
+  rotationAxisType: 2
+  debugText: {fileID: 0}
 --- !u!1 &1207396176460174264
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 166374184353389390}
   - component: {fileID: 8267466605596391676}
+  - component: {fileID: 8998640269525267356}
   m_Layer: 0
   m_Name: HandGrabPose
   m_TagString: Untagged
@@ -253,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622db80eec0bd344f920b1aa056ae8d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.HandGrab.HandGrabPose
-  _surface: {fileID: 0}
+  _surface: {fileID: 8998640269525267356}
   _relativeTo: {fileID: 2914996922208477353}
   _usesHandPose: 1
   _handPose:
@@ -305,6 +308,24 @@ MonoBehaviour:
   _ghostProvider: {fileID: 0}
   _handGhostProvider: {fileID: 11400000, guid: 9b9df4f150839de48af887d742aabf53, type: 2}
   _ovrOffsetMode: 0
+--- !u!114 &8998640269525267356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207396176460174264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab0e0bf5507fad4a9def20ce63299e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    startPoint: {x: 0, y: 0, z: -0.05}
+    endPoint: {x: 0, y: 0, z: -0.045}
+    arcOffset: 0
+    arcLength: 360
+  _relativeTo: {fileID: 2914996922208477353}
 --- !u!1 &1549795935380638244
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,7 +767,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Rotaci\xF3n de meta original"
+  m_text: New knob rotation
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -784,6 +805,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1335,7 +1357,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Agarra e intenta "rotar". '
+  m_text: Grab and enjoy this intuitive behaviour
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1373,6 +1395,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

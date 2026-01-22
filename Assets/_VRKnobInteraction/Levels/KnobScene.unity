@@ -4057,9 +4057,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1410935462128146257, guid: 3e5759f1db6218e4799ed3b3620e25b0, type: 3}
+      propertyPath: m_text
+      value: 'Meta''s original rotation '
+      objectReference: {fileID: 0}
     - target: {fileID: 1675872573791882179, guid: 3e5759f1db6218e4799ed3b3620e25b0, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666362848405329898, guid: 3e5759f1db6218e4799ed3b3620e25b0, type: 3}
+      propertyPath: m_text
+      value: Grab and try to rotate
       objectReference: {fileID: 0}
     - target: {fileID: 5289711424968638569, guid: 3e5759f1db6218e4799ed3b3620e25b0, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4156,8 +4164,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1399325836719836839, guid: 3e5759f1db6218e4799ed3b3620e25b0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1113719505894996582}
   m_SourcePrefab: {fileID: 100100000, guid: 3e5759f1db6218e4799ed3b3620e25b0, type: 3}
+--- !u!4 &1113719505894996580 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3161185275681668534, guid: 3e5759f1db6218e4799ed3b3620e25b0, type: 3}
+  m_PrefabInstance: {fileID: 1113719505894996579}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1113719505894996581 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1399325836719836839, guid: 3e5759f1db6218e4799ed3b3620e25b0, type: 3}
+  m_PrefabInstance: {fileID: 1113719505894996579}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1113719505894996582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113719505894996581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab0e0bf5507fad4a9def20ce63299e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    startPoint: {x: 0, y: 0, z: -0.05}
+    endPoint: {x: 0, y: 0, z: -0.045}
+    arcOffset: 0
+    arcLength: 360
+  _relativeTo: {fileID: 1113719505894996580}
 --- !u!1001 &6248478186700783918
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4254,18 +4293,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2342048642979959464, guid: f8cfd700040a4aa4fb581f8a16497489, type: 3}
-      propertyPath: _oneGrabTransformer
-      value: 
-      objectReference: {fileID: 6457866235834479694}
     - target: {fileID: 4704394124437076714, guid: f8cfd700040a4aa4fb581f8a16497489, type: 3}
       propertyPath: debugText
       value: 
       objectReference: {fileID: 199179476}
-    - target: {fileID: 4704394124437076714, guid: f8cfd700040a4aa4fb581f8a16497489, type: 3}
-      propertyPath: rotationAxisType
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5386933525334220150, guid: f8cfd700040a4aa4fb581f8a16497489, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4363,17 +4394,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8cfd700040a4aa4fb581f8a16497489, type: 3}
---- !u!114 &6457866235834479694 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4704394124437076714, guid: f8cfd700040a4aa4fb581f8a16497489, type: 3}
-  m_PrefabInstance: {fileID: 6457866235834479693}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f2ca10a3e422f3429eab88e6fd44d19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
