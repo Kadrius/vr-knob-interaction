@@ -35,6 +35,9 @@ public class OneGrabKnobKadriusTransformer : MonoBehaviour, ITransformer
         prevHandRightAngle = _grabbable.GrabPoints[0].rotation.eulerAngles.x;
         prevHandUpAngle = _grabbable.GrabPoints[0].rotation.eulerAngles.y;
 
+        prevHandForward = _grabbable.GrabPoints[0].forward;
+        prevHandRight = _grabbable.GrabPoints[0].right;
+        prevHandUp = _grabbable.GrabPoints[0].up;
     }
 
     public void UpdateTransform()
