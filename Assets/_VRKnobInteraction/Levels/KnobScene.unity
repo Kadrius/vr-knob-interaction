@@ -3959,6 +3959,14 @@ PrefabInstance:
       propertyPath: debugText
       value: 
       objectReference: {fileID: 199179476}
+    - target: {fileID: 5310959329879219448, guid: f8cfd700040a4aa4fb581f8a16497489, type: 3}
+      propertyPath: _handAligment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310959329879219448, guid: f8cfd700040a4aa4fb581f8a16497489, type: 3}
+      propertyPath: _scoringModifier._positionRotationWeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5386933525334220150, guid: f8cfd700040a4aa4fb581f8a16497489, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

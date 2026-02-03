@@ -21,6 +21,9 @@ public class OneGrabKnobKadriusTransformer : MonoBehaviour, ITransformer
 
     protected float xFactor, yFactor, zFactor;
 
+    protected float framesToWait = 10;
+    protected float framesCounted = 0;
+
     public void Initialize(IGrabbable grabbable)
     {
         _grabbable = grabbable;
@@ -34,14 +37,20 @@ public class OneGrabKnobKadriusTransformer : MonoBehaviour, ITransformer
         prevHandForwardAngle = _grabbable.GrabPoints[0].rotation.eulerAngles.z;
         prevHandRightAngle = _grabbable.GrabPoints[0].rotation.eulerAngles.x;
         prevHandUpAngle = _grabbable.GrabPoints[0].rotation.eulerAngles.y;
-
-        prevHandForward = _grabbable.GrabPoints[0].forward;
-        prevHandRight = _grabbable.GrabPoints[0].right;
-        prevHandUp = _grabbable.GrabPoints[0].up;
     }
 
     public void UpdateTransform()
     {
+        //This fixes the initial jump when grabbing the knob
+        if (framesCounted < framesToWait)
+        {
+            framesCounted++;
+            prevHandForward = _grabbable.GrabPoints[0].forward;
+            prevHandRight = _grabbable.GrabPoints[0].right;
+            prevHandUp = _grabbable.GrabPoints[0].up;
+            return;
+        }
+
         Vector3 currentHandForward = _grabbable.GrabPoints[0].forward;
         Vector3 currentHandRight = _grabbable.GrabPoints[0].right;
         Vector3 currentHandUp = _grabbable.GrabPoints[0].up;
@@ -50,9 +59,6 @@ public class OneGrabKnobKadriusTransformer : MonoBehaviour, ITransformer
         yFactor = MathUtils.ColinearityFactor(rotationAxis, currentHandUp, true);
         zFactor = MathUtils.ColinearityFactor(rotationAxis, currentHandForward, true);
 
-        //Chose to use SignedAngle because it gives an absolute angle difference. Using eulerAngles difference can lead to issues when crossing 0/360 boundary.
-        //It isn't perfect because the axis of rotation is not always perfectly aligned, but the difference is minimal because the calculation is frame by frame
-        //and the factors help to minimize the error.
         float xDeltaAngle = Vector3.SignedAngle(prevHandForward, currentHandForward, currentHandRight);
         float yDeltaAngle = Vector3.SignedAngle(prevHandForward, currentHandForward, currentHandUp);
         float zDeltaAngle = Vector3.SignedAngle(prevHandRight, currentHandRight, currentHandForward);
@@ -60,8 +66,6 @@ public class OneGrabKnobKadriusTransformer : MonoBehaviour, ITransformer
         xDeltaAngle *= xFactor;
         yDeltaAngle *= yFactor;
         zDeltaAngle *= zFactor;
-
-        DebugPrints(xDeltaAngle, yDeltaAngle, zDeltaAngle);
 
         Vector3 newRotation = _grabbable.Transform.rotation.eulerAngles;
         newRotation.z += xDeltaAngle + yDeltaAngle + zDeltaAngle;
@@ -74,7 +78,7 @@ public class OneGrabKnobKadriusTransformer : MonoBehaviour, ITransformer
 
     public void EndTransform()
     {
-
+        framesCounted = 0;
     }
 
     #region Protected Methods
@@ -98,19 +102,6 @@ public class OneGrabKnobKadriusTransformer : MonoBehaviour, ITransformer
                 break;
         }
         return rotationAxis;
-    }
-
-    protected void DebugPrints(float xDeltaAngle, float yDeltaAngle, float zDeltaAngle)
-    {
-        if (debugText != null)
-        {
-            debugText.text = $"PrevHandForwardAngle: {prevHandForwardAngle}\n" +
-                             $"PrevHandRightAngle: {prevHandRightAngle}\n" +
-                             $"PrevHandUpAngle: {prevHandUpAngle}\n" +
-                             $"xDeltaAngle: {xDeltaAngle} - xFactor: {xFactor}\n" +
-                             $"yDeltaAngle: {yDeltaAngle} - yFactor: {yFactor}\n" +
-                             $"zDeltaAngle: {zDeltaAngle} - zFactor: {zFactor}\n";
-        }
     }
 
     #endregion
